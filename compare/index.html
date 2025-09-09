@@ -1,0 +1,1246 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../img/logo_v2.svg">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.19">
+    
+    
+      
+        <title>Index - MLPerf Inference Results Comparison</title>
+      
+    
+    
+  
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e37652d.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+<link rel="stylesheet" rel="preload" as="style" media="all" href="thirdparty/tablesorter/dist/css/jquery.tablesorter.pager.min.css">
+<link rel="stylesheet" rel="preload" as="style" media="all" href="thirdparty/tablesorter/dist/css/theme.blackice.min.css">
+<link rel="stylesheet" rel="preload" as="style" media="all" href="thirdparty/tablesorter/dist/css/theme.blue.min.css">
+<style type="text/css">
+
+table.resultstable, table.counttable {
+    overflow-x: auto;
+}
+
+.pager1{
+    display: none!important;
+}
+
+.pagerSavedHeightSpacer {
+    display: none!important;
+}
+.resultstable_wrapper, .counttable_wrapper {
+    overflow-x: auto;
+}
+
+/* General form styling */
+form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style for form group */
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Label styling */
+label {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+/* Select styling */
+select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-shadow: none;
+    appearance: none;
+    transition: border-color 0.3s ease;
+}
+
+select:focus {
+    border-color: #6200ee;
+    outline: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom arrow for select */
+select::-ms-expand {
+    display: none;
+}
+
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #333;
+    pointer-events: none;
+    transform: translateY(-50%);
+}
+
+/* Button styling */
+button {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #6200ee;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #3700b3;
+}
+
+button:active {
+    background-color: #6200ee;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Input and button ripple effect */
+.button-ripple, .input-ripple {
+    position: relative;
+    overflow: hidden;
+}
+
+.button-ripple::after, .input-ripple::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.5s ease, opacity 1s ease;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.button-ripple:active::after, .input-ripple:focus::after {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    transition: 0s;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    form {
+        max-width: 100%;
+        padding: 15px;
+    }
+
+    button {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    select {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    form {
+        padding: 10px;
+    }
+
+    button {
+        padding: 8px;
+        font-size: 14px;
+    }
+
+    select {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    label {
+        font-size: 13px;
+    }
+}
+
+select.pagesize, select.gotoPage {
+    width: fit-content;
+    padding: 5px;
+}
+
+
+/*Testing*/
+/* Base Table Styles */
+#results_table {
+    margin: 20px 0;
+    overflow-x: auto;
+}
+
+.tablesorter {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    font-size: 14px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* Header and Footer Styles */
+.tablesorter thead th,
+.tablesorter tfoot th {
+    background-color: #6200ea; /* Material Design Purple */
+    color: #ffffff;
+    padding: 12px;
+    text-align: left;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-bottom: 2px solid #512da8; /* Darker purple for bottom border */
+}
+
+.tablesorter tfoot th {
+    background-color: #6200ea;
+}
+
+/* Body Row Styles */
+.tablesorter tbody tr {
+    border-bottom: 1px solid #e0e0e0;
+    transition: background-color 0.3s ease;
+}
+
+.tablesorter tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.tablesorter tbody tr:hover {
+    background-color: #eeeeee;
+}
+
+.tablesorter tbody td {
+    padding: 12px;
+    text-align: left;
+    color: #424242;
+}
+
+/* Specific Column Styles */
+#col-id,
+#col-system,
+#col-submitter,
+#col-accelerator {
+    font-weight: bold;
+}
+#col-id, .col-id {
+    min-width: 80px;
+    max-width: 80px;
+    width: 80px;
+    left: 0px;
+}
+td.col-result {
+    min-width: 100px;
+    text-align: right!important;
+}
+td.col-system, th.col-system {
+    min-width: 150px;
+    max-width: 150px;
+    width: 150px;
+    word-break: break-word;
+    left: 80px;
+}
+td.col-submitter, th.col-submitter {
+    min-width: 120px;
+    max-width: 120px;
+    width: 120px;
+    word-break: break-word;
+    left: 230px;
+}
+td.col-accelerator, th.col-accelerator {
+    min-width: 120px;
+    max-width: 120px;
+    width: 120px;
+    word-break: break-word;
+    left: 350px;
+}
+
+td.count-submitter, th.count-submitter {
+    min-width: 150px;
+    max-width: 150px;
+    width: 150px;
+    left: 0px;
+    background: white;
+    font-weight: 600;
+    font-size: Large;
+    word-break: break-word;
+    position:sticky;
+}
+.col-scenario {
+    font-weight: 500;
+    color: #6200ea;
+    text-align: center;
+}
+
+.col-result {
+    text-align: right;
+    color: #303f9f; /* Material Design Blue */
+    font-weight: 600;
+}
+
+.headcol {
+  position: sticky;
+  background:white;
+  border:none!important;
+}
+
+.collapsible {
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+.chart {
+    /* padding: 0 18px; */
+    display: none; /* Hidden by default */
+    overflow: hidden;
+    height: 500px;
+    width: 100%;
+    background-color: white;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .tablesorter thead,
+    .tablesorter tfoot {
+        display: none;
+    }
+
+    .tablesorter tbody tr {
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+    }
+
+    .tablesorter tbody td {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        text-align: right;
+    }
+
+    .tablesorter tbody td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        color: #6200ea;
+        text-transform: uppercase;
+    }
+
+    .tablesorter tbody td:first-child {
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+    }
+
+    .tablesorter tbody td:last-child {
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+    }
+}
+
+
+
+</style>
+
+  <!-- Add scripts that need to run afterwards here -->
+
+    
+  
+      
+    
+<!-- load jQuery and tablesorter scripts -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+
+<script type="text/javascript" src="thirdparty/tablesorter/dist/js/jquery.tablesorter.js"></script>
+<!-- tablesorter widgets (optional) -->
+
+<script type="text/javascript" src="thirdparty/tablesorter/dist/js/jquery.tablesorter.widgets.js"></script>
+<script type="text/javascript" src="thirdparty/tablesorter/dist/js/extras/jquery.tablesorter.pager.min.js"></script>
+  <!-- Add scripts that need to run before here -->
+  <script src="https://cdn.canvasjs.com/ga/jquery.canvasjs.min.js"></script>
+  
+<script type="text/javascript" src="javascripts/config.js"></script>
+<script type="text/javascript" src="javascripts/common.js"></script>
+  <!-- Add scripts that need to run afterwards here -->
+
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="deep-purple" data-md-color-accent="yellow">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="MLPerf Inference Results Comparison" class="md-header__button md-logo" aria-label="MLPerf Inference Results Comparison" data-md-component="logo">
+      
+  <img src="../img/logo_v2.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MLPerf Inference Results Comparison
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Index
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/mlcommons/inference_results_v5.1" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href=".." class="md-tabs__link">
+        
+  
+  
+    
+  
+  Results
+
+      </a>
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="MLPerf Inference Results Comparison" class="md-nav__button md-logo" aria-label="MLPerf Inference Results Comparison" data-md-component="logo">
+      
+  <img src="../img/logo_v2.svg" alt="logo">
+
+    </a>
+    MLPerf Inference Results Comparison
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/mlcommons/inference_results_v5.1" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.0.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path fill="currentColor" d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Results
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+                
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+  
+
+
+
+  
+  
+
+
+  <h1>Index</h1>
+
+<html>
+
+
+        <script type='text/javascript'>
+        var data1 = {}, data2 = {}, draw_power = {}, draw_power_efficiency = {}, ytitle = {}, sortcolumnindex, perfsortorder;
+        </script>
+
+
+        <script type='text/javascript'>
+        data1['Offline'] = 'v4.1: 1xMI300X_2EPYC-937F', data2['Offline'] = 'v4.1: 8xMI300X_2EPYC-937F', draw_power['Offline'] = false, draw_power_efficiency['Offline'] = false, is_power = false,
+        ytitle['Offline'] = 'Samples per Second',
+        sortcolumnindex = 4, perfsortorder = 1;
+        </script>
+        <div id="Offline" style="display:none"
+            > <h3 id="table_header_Offline">Comparing Offline scenario for v4.1: 1xMI300X_2EPYC-937F and v4.1: 8xMI300X_2EPYC-937F</h3>
+            <!-- pager -->
+            <div class="pager1">
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/first.png" class="first"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+            <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/next.png" class="next"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/last.png" class="last"/>
+            <select class="pagesize" title="Select page size">
+            <option selected="selected" value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="all">All</option>
+            </select>
+            <select class="gotoPage" title="Select page number"></select>
+            </div>
+        <div id="results_table_Offline"> <table class="tablesorter" id="results_Offline"><thead> <tr>
+        <th>Model</th>
+        <th>v4.1: 1xMI300X_2EPYC-937F</th>
+        <th>v4.1: 8xMI300X_2EPYC-937F</th>
+        <th>Performance Delta</th></tr></thead></table></div>
+            <!-- pager -->
+            <div class="pager1">
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/first.png" class="first"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+            <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/next.png" class="next"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/last.png" class="last"/>
+            <select class="pagesize" title="Select page size">
+            <option selected="selected" value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="all">All</option>
+            </select>
+            <select class="gotoPage" title="Select page number"></select>
+            </div>
+
+            <div id="chartContainerOffline1" class="bgtext" style="height: 370px; width: 100%;"></div>
+            <button class="btn btn-primary"  id="printChartOffline1">Download</button>
+
+            <div id="chartContainerOffline2" class="bgtext power-content" style="height: 370px; width: 100%;"></div>
+            <button class="btn btn-primary power-content"  id="printChartOffline2">Download</button>
+            <div id="chartContainerOffline3" class="bgtext power-content" style="height: 370px; width: 100%;"></div>
+            <button class="btn btn-primary power-content"  id="printChartOffline3">Download</button>
+
+        <hr>
+        </div>
+
+
+        <script type='text/javascript'>
+        data1['Server'] = 'v4.1: 1xMI300X_2EPYC-937F', data2['Server'] = 'v4.1: 8xMI300X_2EPYC-937F', draw_power['Server'] = false, draw_power_efficiency['Server'] = false, is_power = false,
+        ytitle['Server'] = 'Samples per Second',
+        sortcolumnindex = 4, perfsortorder = 1;
+        </script>
+        <div id="Server" style="display:none"
+            > <h3 id="table_header_Server">Comparing Server scenario for v4.1: 1xMI300X_2EPYC-937F and v4.1: 8xMI300X_2EPYC-937F</h3>
+            <!-- pager -->
+            <div class="pager1">
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/first.png" class="first"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+            <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/next.png" class="next"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/last.png" class="last"/>
+            <select class="pagesize" title="Select page size">
+            <option selected="selected" value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="all">All</option>
+            </select>
+            <select class="gotoPage" title="Select page number"></select>
+            </div>
+        <div id="results_table_Server"> <table class="tablesorter" id="results_Server"><thead> <tr>
+        <th>Model</th>
+        <th>v4.1: 1xMI300X_2EPYC-937F</th>
+        <th>v4.1: 8xMI300X_2EPYC-937F</th>
+        <th>Performance Delta</th></tr></thead></table></div>
+            <!-- pager -->
+            <div class="pager1">
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/first.png" class="first"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+            <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/next.png" class="next"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/last.png" class="last"/>
+            <select class="pagesize" title="Select page size">
+            <option selected="selected" value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="all">All</option>
+            </select>
+            <select class="gotoPage" title="Select page number"></select>
+            </div>
+
+            <div id="chartContainerServer1" class="bgtext" style="height: 370px; width: 100%;"></div>
+            <button class="btn btn-primary"  id="printChartServer1">Download</button>
+
+            <div id="chartContainerServer2" class="bgtext power-content" style="height: 370px; width: 100%;"></div>
+            <button class="btn btn-primary power-content"  id="printChartServer2">Download</button>
+            <div id="chartContainerServer3" class="bgtext power-content" style="height: 370px; width: 100%;"></div>
+            <button class="btn btn-primary power-content"  id="printChartServer3">Download</button>
+
+        <hr>
+        </div>
+
+
+        <script type='text/javascript'>
+        data1['Interactive'] = 'v4.1: 1xMI300X_2EPYC-937F', data2['Interactive'] = 'v4.1: 8xMI300X_2EPYC-937F', draw_power['Interactive'] = false, draw_power_efficiency['Interactive'] = false, is_power = false,
+        ytitle['Interactive'] = 'Samples per Second',
+        sortcolumnindex = 4, perfsortorder = 1;
+        </script>
+        <div id="Interactive" style="display:none"
+            > <h3 id="table_header_Interactive">Comparing Interactive scenario for v4.1: 1xMI300X_2EPYC-937F and v4.1: 8xMI300X_2EPYC-937F</h3>
+            <!-- pager -->
+            <div class="pager1">
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/first.png" class="first"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+            <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/next.png" class="next"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/last.png" class="last"/>
+            <select class="pagesize" title="Select page size">
+            <option selected="selected" value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="all">All</option>
+            </select>
+            <select class="gotoPage" title="Select page number"></select>
+            </div>
+        <div id="results_table_Interactive"> <table class="tablesorter" id="results_Interactive"><thead> <tr>
+        <th>Model</th>
+        <th>v4.1: 1xMI300X_2EPYC-937F</th>
+        <th>v4.1: 8xMI300X_2EPYC-937F</th>
+        <th>Performance Delta</th></tr></thead></table></div>
+            <!-- pager -->
+            <div class="pager1">
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/first.png" class="first"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+            <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/next.png" class="next"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/last.png" class="last"/>
+            <select class="pagesize" title="Select page size">
+            <option selected="selected" value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="all">All</option>
+            </select>
+            <select class="gotoPage" title="Select page number"></select>
+            </div>
+
+            <div id="chartContainerInteractive1" class="bgtext" style="height: 370px; width: 100%;"></div>
+            <button class="btn btn-primary"  id="printChartInteractive1">Download</button>
+
+            <div id="chartContainerInteractive2" class="bgtext power-content" style="height: 370px; width: 100%;"></div>
+            <button class="btn btn-primary power-content"  id="printChartInteractive2">Download</button>
+            <div id="chartContainerInteractive3" class="bgtext power-content" style="height: 370px; width: 100%;"></div>
+            <button class="btn btn-primary power-content"  id="printChartInteractive3">Download</button>
+
+        <hr>
+        </div>
+
+
+        <script type='text/javascript'>
+        data1['SingleStream'] = 'v4.1: 1xMI300X_2EPYC-937F', data2['SingleStream'] = 'v4.1: 8xMI300X_2EPYC-937F', draw_power['SingleStream'] = false, draw_power_efficiency['SingleStream'] = false, is_power = false,
+        ytitle['SingleStream'] = 'Latency per sample in milliseconds',
+        sortcolumnindex = 4, perfsortorder = 1;
+        </script>
+        <div id="SingleStream" style="display:none"
+            > <h3 id="table_header_SingleStream">Comparing SingleStream scenario for v4.1: 1xMI300X_2EPYC-937F and v4.1: 8xMI300X_2EPYC-937F</h3>
+            <!-- pager -->
+            <div class="pager1">
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/first.png" class="first"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+            <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/next.png" class="next"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/last.png" class="last"/>
+            <select class="pagesize" title="Select page size">
+            <option selected="selected" value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="all">All</option>
+            </select>
+            <select class="gotoPage" title="Select page number"></select>
+            </div>
+        <div id="results_table_SingleStream"> <table class="tablesorter" id="results_SingleStream"><thead> <tr>
+        <th>Model</th>
+        <th>v4.1: 1xMI300X_2EPYC-937F</th>
+        <th>v4.1: 8xMI300X_2EPYC-937F</th>
+        <th>Performance Delta</th></tr></thead></table></div>
+            <!-- pager -->
+            <div class="pager1">
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/first.png" class="first"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+            <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/next.png" class="next"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/last.png" class="last"/>
+            <select class="pagesize" title="Select page size">
+            <option selected="selected" value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="all">All</option>
+            </select>
+            <select class="gotoPage" title="Select page number"></select>
+            </div>
+
+            <div id="chartContainerSingleStream1" class="bgtext" style="height: 370px; width: 100%;"></div>
+            <button class="btn btn-primary"  id="printChartSingleStream1">Download</button>
+
+            <div id="chartContainerSingleStream2" class="bgtext power-content" style="height: 370px; width: 100%;"></div>
+            <button class="btn btn-primary power-content"  id="printChartSingleStream2">Download</button>
+            <div id="chartContainerSingleStream3" class="bgtext power-content" style="height: 370px; width: 100%;"></div>
+            <button class="btn btn-primary power-content"  id="printChartSingleStream3">Download</button>
+
+        <hr>
+        </div>
+
+
+        <script type='text/javascript'>
+        data1['MultiStream'] = 'v4.1: 1xMI300X_2EPYC-937F', data2['MultiStream'] = 'v4.1: 8xMI300X_2EPYC-937F', draw_power['MultiStream'] = false, draw_power_efficiency['MultiStream'] = false, is_power = false,
+        ytitle['MultiStream'] = 'Latency per query of 8 samples in milliseconds',
+        sortcolumnindex = 4, perfsortorder = 1;
+        </script>
+        <div id="MultiStream" style="display:none"
+            > <h3 id="table_header_MultiStream">Comparing MultiStream scenario for v4.1: 1xMI300X_2EPYC-937F and v4.1: 8xMI300X_2EPYC-937F</h3>
+            <!-- pager -->
+            <div class="pager1">
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/first.png" class="first"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+            <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/next.png" class="next"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/last.png" class="last"/>
+            <select class="pagesize" title="Select page size">
+            <option selected="selected" value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="all">All</option>
+            </select>
+            <select class="gotoPage" title="Select page number"></select>
+            </div>
+        <div id="results_table_MultiStream"> <table class="tablesorter" id="results_MultiStream"><thead> <tr>
+        <th>Model</th>
+        <th>v4.1: 1xMI300X_2EPYC-937F</th>
+        <th>v4.1: 8xMI300X_2EPYC-937F</th>
+        <th>Performance Delta</th></tr></thead></table></div>
+            <!-- pager -->
+            <div class="pager1">
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/first.png" class="first"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/prev.png" class="prev"/>
+            <span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/next.png" class="next"/>
+            <img src="https://mottie.github.io/tablesorter/addons/pager/icons/last.png" class="last"/>
+            <select class="pagesize" title="Select page size">
+            <option selected="selected" value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="all">All</option>
+            </select>
+            <select class="gotoPage" title="Select page number"></select>
+            </div>
+
+            <div id="chartContainerMultiStream1" class="bgtext" style="height: 370px; width: 100%;"></div>
+            <button class="btn btn-primary"  id="printChartMultiStream1">Download</button>
+
+            <div id="chartContainerMultiStream2" class="bgtext power-content" style="height: 370px; width: 100%;"></div>
+            <button class="btn btn-primary power-content"  id="printChartMultiStream2">Download</button>
+            <div id="chartContainerMultiStream3" class="bgtext power-content" style="height: 370px; width: 100%;"></div>
+            <button class="btn btn-primary power-content"  id="printChartMultiStream3">Download</button>
+
+        <hr>
+        </div>
+
+<script type="text/javascript" src="javascripts/init_tablesorter.js">
+</script>
+
+<script type="text/javascript" src="javascripts/chart_compare.js">
+</script>
+<script type="text/javascript" src="javascripts/compare_results.js">
+</script>
+
+    <form id="compareform"  method="post" action="">
+        <h3>Compare Results</h3>
+
+        <div class="form-field">
+            <label for="system1">System 1</label>
+            <select id="system1" name="system1" class="col">
+                <option value='5.1-0001' >AMD: Supermicro AS-8125GS-TNMR2</option>
+<option value='5.1-0002' >AMD: QuantaGrid D74A-7U </option>
+<option value='5.1-0003' >AMD: QuantaGrid D74A-7U</option>
+<option value='5.1-0004' >AMD: Quanta S7PA</option>
+<option value='5.1-0005' >ASUSTeK: ESC8000A-E12 (8x H200-NVL-141GB, TensorRT)</option>
+<option value='5.1-0006' >ASUSTeK: ESC_A8A_MI325X_256GBx8</option>
+<option value='5.1-0007' >ASUSTeK: ASUSTeK ESC N8 H200 (8x H200-SXM-141GB, TensorRT)</option>
+<option value='5.1-0008' >Azure: ND_GB200_v6</option>
+<option value='5.1-0009' >Broadcom_Supermicro: Supermicro SYS-422GA-NBRT-LCC (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0010' >Cisco: C240M8-1-node-2S-GNR_86C</option>
+<option value='5.1-0011' >Cisco: Cisco UCS C845A M8 (8x H200-NVL-141GB, TensorRT)</option>
+<option value='5.1-0012' >Cisco: Cisco UCS C845A M8 (8x L40S-48GB, TensorRT)</option>
+<option value='5.1-0013' >Cisco: Cisco UCS C885A M8 (16x H200-SXM-141GB, TensorRT)</option>
+<option value='5.1-0014' >Cisco: Cisco UCS C885A M8 (8x H200-SXM-141GB, TensorRT)</option>
+<option value='5.1-0015' >Cisco: HPF HGX System (16xH100-SXM-80GB, TensorRT)</option>
+<option value='5.1-0016' >Cisco: HPF HGX System (32xH100-SXM-80GB, TensorRT)</option>
+<option value='5.1-0017' >Cisco: X210M8-1-node-2S-GNR_86C</option>
+<option value='5.1-0018' >Dell: PowerEdge R470 (2x L4-PCIE-24GB, TensorRT)</option>
+<option value='5.1-0019' >Dell: PowerEdge R570 (4x L4-PCIE-24GBx4, TensorRT)</option>
+<option value='5.1-0020' >Dell: R770_XEON6787Px2</option>
+<option value='5.1-0021' >Dell: Dell PowerEdge R7715 (3x H100-NVL-94GB, TensorRT)</option>
+<option value='5.1-0022' >Dell: Dell PowerEdge XE7740 (8x L40S, TensorRT)</option>
+<option value='5.1-0023' >Dell: Dell PowerEdge XE7745 (8x H200-NVL-141GB, TensorRT)</option>
+<option value='5.1-0024' >Dell: Dell PowerEdge XE9680L (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0025' >Dell: Dell PowerEdge XE9680L (8x H200-SXM-141GB, TensorRT)</option>
+<option value='5.1-0026' >Dell: Dell PowerEdge XE9680 (8xH200-SXM-141GB, TensorRT)</option>
+<option value='5.1-0027' >Dell: Dell Poweredge XE9680</option>
+<option value='5.1-0028' >Dell: Dell PowerEdge XE9685L (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0029' >Dell_Broadcom: Dell PowerEdge XE9680 (8x H200-SXM-141GB,VMware ESXi 9.0.0)</option>
+<option value='5.1-0030' >Dell_MangoBoost: Dell PowerEdge XE9680 (2x8x MI300X-192GB MangoBoost-LLMBoost)</option>
+<option value='5.1-0031' >Dell_MangoBoost: Dell PowerEdge XE9680 (8x MI300X-192GB MangoBoost-LLMBoost)</option>
+<option value='5.1-0032' >GATEOverflow: GATE Overflow Intel Sapphire Rapids (2x RTX 4090)</option>
+<option value='5.1-0033' >GATEOverflow: GATE Overflow Intel Sapphire Rapids (2x RTX 4090)</option>
+<option value='5.1-0045' >GigaComputing: G893-ZX1-AAX2</option>
+<option value='5.1-0046' >GigaComputing: G894-SD1</option>
+<option value='5.1-0047' >Google: NVIDIA DGX B200 (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0048' >Google: NVIDIA H200 (8x H200-SXM-141GB, TensorRT)</option>
+<option value='5.1-0049' >HPE: HPE Cray XD670 (8x H200-SXM-141GB)</option>
+<option value='5.1-0050' >HPE: HPE ProLiant Compute DL380a Gen12 (10x H200-NVL-141GB)</option>
+<option value='5.1-0051' >HPE: HPE ProLiant Compute DL380a Gen12 (8x RTX Pro 6000 Blackwell Server Edition)</option>
+<option value='5.1-0052' >HPE: HPE ProLiant DL385 Gen11 (2x H200-NVL-141GB)</option>
+<option value='5.1-0053' >HPE: HPE ProLiant Compute DL384 Gen12 (2x GH200-144GB_aarch64)</option>
+<option value='5.1-0055' >Intel: 1-node-2S-GNR_128C</option>
+<option value='5.1-0056' >Intel: 1-node-4x-BMG-Pro-B60-Dual</option>
+<option value='5.1-0058' >Intel_VMware: 1-node-2S-GNR_86C_BareMetal</option>
+<option value='5.1-0059' >Intel_VMware: 1-node-2S-GNR_86C_ESXi_172VCPU-VM</option>
+<option value='5.1-0060' >Lambda: NVIDIA DGX B200 (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0061' >Lenovo: ThinkSystem SR680a V3 (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0062' >Lenovo: ThinkSystem SR780a V3 (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0063' >Lenovo: ThinkSystem_SR650_V4_GNR_86C</option>
+<option value='5.1-0065' >MangoBoost: MangoBoost Heterogeneous Cluster (4x8x MI300X-192GB, 2x8x MI325X-256GB, LLMBoost)</option>
+<option value='5.1-0066' >MangoBoost: Supermicro AS-8125GS-TNMR2 (8x MI300X-192GB MangoBoost-LLMBoost)</option>
+<option value='5.1-0067' >MangoBoost: MangoBoost (8x MI325X-256GB, LLMBoost)</option>
+<option value='5.1-0068' >MiTAC: G8825Z5</option>
+<option value='5.1-0069' >NVIDIA: NVIDIA DGX B200 (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0070' >NVIDIA:  (4x GB200-186GB_aarch64, TensorRT)</option>
+<option value='5.1-0071' >NVIDIA:  (72x GB200-186GB_aarch64, TensorRT)</option>
+<option value='5.1-0072' >NVIDIA:  (72x GB300-288GB_aarch64, TensorRT)</option>
+<option value='5.1-0073' >Nebius: Nebius B200 (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0074' >Nebius: Nebius GB200 (4x GB200-186GB_aarch64, TensorRT)</option>
+<option value='5.1-0075' >Nebius: Nebius H200 (8x H200-SXM-141GB, TensorRT)</option>
+<option value='5.1-0076' >Oracle: BM.GPU.B200.8</option>
+<option value='5.1-0077' >Oracle: BM.GPU.GB200.4</option>
+<option value='5.1-0078' >Quanta_Cloud_Technology: 1-node-2S-GNR_86C</option>
+<option value='5.1-0079' >Quanta_Cloud_Technology: QuantaGrid D74H-7U (8x H200-SXM-141GB, TensorRT)</option>
+<option value='5.1-0080' >Quanta_Cloud_Technology: D75E-4U_H200-NVL-141GBx4</option>
+<option value='5.1-0081' >Quanta_Cloud_Technology: D75T-7U_8xMI325X</option>
+<option value='5.1-0082' >RedHat: IBM Cloud gx3 instance 1xL40S-PCIE-48GB ,vLLM</option>
+<option value='5.1-0083' >RedHat: Dell PowerEdge XE8640 (1xH100-SXM-80GB, vLLM)</option>
+<option value='5.1-0084' >Supermicro: 1-node-2S-GNR_128C</option>
+<option value='5.1-0085' >Supermicro: AS-8126GS-TNMR (8x MI325X)</option>
+<option value='5.1-0086' >Supermicro: AS-4126GS-NBR-LCC (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0087' >Supermicro: SYS-422GA-NBRT-LCC (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0088' >Supermicro: SYS-422GS-NBRT-LCC (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0089' >Supermicro: SYS-A21GE-NBRT (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0090' >Supermicro_MangoBoost: Supermicro AS-8126GS-TNMR (2x8x MI325X-256GB MangoBoost-LLMBoost)</option>
+<option value='5.1-0091' >Supermicro_MangoBoost: Supermicro AS-8126GS-TNMR (2x8x MI325X-256GB MangoBoost-LLMBoost) and Supermicro AS-8125GS-TNMR2 (1x8x MI300X-192GB MangoBoost-LLMBoost)</option>
+<option value='5.1-0092' >The_Stage: Nebius H100 (8x H100-SXM-80GB, TheStageAI)</option>
+<option value='5.1-0093' >University-of-Florida: NVIDIA DGX B200 (1x B200‑SXM‑180GB, TensorRT)</option>
+<option value='5.1-0094' >University-of-Florida: NVIDIA DGX B200 (8x B200‑SXM‑180GB, TensorRT)</option>
+<option value='5.1-0095' >Vultr: Supermicro AS -8126GS-TNMR (8x MI325X)</option>
+<option value='5.1-0096' >Vultr: Supermicro AS -8126GS-TNMR (8x MI325X)</option>
+<option value='5.1-0097' >CoreWeave:  (8x GB300-288GB_aarch64, TensorRT)</option>
+
+            </select>
+        </div>
+
+        <div class="form-field">
+            <label for="system2">System 2</label>
+            <select id="system2" name="system2" class="col">
+                <option value='5.1-0001' >AMD: Supermicro AS-8125GS-TNMR2</option>
+<option value='5.1-0002' >AMD: QuantaGrid D74A-7U </option>
+<option value='5.1-0003' >AMD: QuantaGrid D74A-7U</option>
+<option value='5.1-0004' >AMD: Quanta S7PA</option>
+<option value='5.1-0005' >ASUSTeK: ESC8000A-E12 (8x H200-NVL-141GB, TensorRT)</option>
+<option value='5.1-0006' >ASUSTeK: ESC_A8A_MI325X_256GBx8</option>
+<option value='5.1-0007' >ASUSTeK: ASUSTeK ESC N8 H200 (8x H200-SXM-141GB, TensorRT)</option>
+<option value='5.1-0008' >Azure: ND_GB200_v6</option>
+<option value='5.1-0009' >Broadcom_Supermicro: Supermicro SYS-422GA-NBRT-LCC (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0010' >Cisco: C240M8-1-node-2S-GNR_86C</option>
+<option value='5.1-0011' >Cisco: Cisco UCS C845A M8 (8x H200-NVL-141GB, TensorRT)</option>
+<option value='5.1-0012' >Cisco: Cisco UCS C845A M8 (8x L40S-48GB, TensorRT)</option>
+<option value='5.1-0013' >Cisco: Cisco UCS C885A M8 (16x H200-SXM-141GB, TensorRT)</option>
+<option value='5.1-0014' >Cisco: Cisco UCS C885A M8 (8x H200-SXM-141GB, TensorRT)</option>
+<option value='5.1-0015' >Cisco: HPF HGX System (16xH100-SXM-80GB, TensorRT)</option>
+<option value='5.1-0016' >Cisco: HPF HGX System (32xH100-SXM-80GB, TensorRT)</option>
+<option value='5.1-0017' >Cisco: X210M8-1-node-2S-GNR_86C</option>
+<option value='5.1-0018' >Dell: PowerEdge R470 (2x L4-PCIE-24GB, TensorRT)</option>
+<option value='5.1-0019' >Dell: PowerEdge R570 (4x L4-PCIE-24GBx4, TensorRT)</option>
+<option value='5.1-0020' >Dell: R770_XEON6787Px2</option>
+<option value='5.1-0021' >Dell: Dell PowerEdge R7715 (3x H100-NVL-94GB, TensorRT)</option>
+<option value='5.1-0022' >Dell: Dell PowerEdge XE7740 (8x L40S, TensorRT)</option>
+<option value='5.1-0023' >Dell: Dell PowerEdge XE7745 (8x H200-NVL-141GB, TensorRT)</option>
+<option value='5.1-0024' >Dell: Dell PowerEdge XE9680L (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0025' >Dell: Dell PowerEdge XE9680L (8x H200-SXM-141GB, TensorRT)</option>
+<option value='5.1-0026' >Dell: Dell PowerEdge XE9680 (8xH200-SXM-141GB, TensorRT)</option>
+<option value='5.1-0027' >Dell: Dell Poweredge XE9680</option>
+<option value='5.1-0028' >Dell: Dell PowerEdge XE9685L (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0029' >Dell_Broadcom: Dell PowerEdge XE9680 (8x H200-SXM-141GB,VMware ESXi 9.0.0)</option>
+<option value='5.1-0030' >Dell_MangoBoost: Dell PowerEdge XE9680 (2x8x MI300X-192GB MangoBoost-LLMBoost)</option>
+<option value='5.1-0031' >Dell_MangoBoost: Dell PowerEdge XE9680 (8x MI300X-192GB MangoBoost-LLMBoost)</option>
+<option value='5.1-0032' >GATEOverflow: GATE Overflow Intel Sapphire Rapids (2x RTX 4090)</option>
+<option value='5.1-0033' >GATEOverflow: GATE Overflow Intel Sapphire Rapids (2x RTX 4090)</option>
+<option value='5.1-0045' >GigaComputing: G893-ZX1-AAX2</option>
+<option value='5.1-0046' >GigaComputing: G894-SD1</option>
+<option value='5.1-0047' >Google: NVIDIA DGX B200 (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0048' >Google: NVIDIA H200 (8x H200-SXM-141GB, TensorRT)</option>
+<option value='5.1-0049' >HPE: HPE Cray XD670 (8x H200-SXM-141GB)</option>
+<option value='5.1-0050' >HPE: HPE ProLiant Compute DL380a Gen12 (10x H200-NVL-141GB)</option>
+<option value='5.1-0051' >HPE: HPE ProLiant Compute DL380a Gen12 (8x RTX Pro 6000 Blackwell Server Edition)</option>
+<option value='5.1-0052' >HPE: HPE ProLiant DL385 Gen11 (2x H200-NVL-141GB)</option>
+<option value='5.1-0053' >HPE: HPE ProLiant Compute DL384 Gen12 (2x GH200-144GB_aarch64)</option>
+<option value='5.1-0055' >Intel: 1-node-2S-GNR_128C</option>
+<option value='5.1-0056' >Intel: 1-node-4x-BMG-Pro-B60-Dual</option>
+<option value='5.1-0058' >Intel_VMware: 1-node-2S-GNR_86C_BareMetal</option>
+<option value='5.1-0059' >Intel_VMware: 1-node-2S-GNR_86C_ESXi_172VCPU-VM</option>
+<option value='5.1-0060' >Lambda: NVIDIA DGX B200 (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0061' >Lenovo: ThinkSystem SR680a V3 (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0062' >Lenovo: ThinkSystem SR780a V3 (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0063' >Lenovo: ThinkSystem_SR650_V4_GNR_86C</option>
+<option value='5.1-0065' >MangoBoost: MangoBoost Heterogeneous Cluster (4x8x MI300X-192GB, 2x8x MI325X-256GB, LLMBoost)</option>
+<option value='5.1-0066' >MangoBoost: Supermicro AS-8125GS-TNMR2 (8x MI300X-192GB MangoBoost-LLMBoost)</option>
+<option value='5.1-0067' >MangoBoost: MangoBoost (8x MI325X-256GB, LLMBoost)</option>
+<option value='5.1-0068' >MiTAC: G8825Z5</option>
+<option value='5.1-0069' >NVIDIA: NVIDIA DGX B200 (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0070' >NVIDIA:  (4x GB200-186GB_aarch64, TensorRT)</option>
+<option value='5.1-0071' >NVIDIA:  (72x GB200-186GB_aarch64, TensorRT)</option>
+<option value='5.1-0072' >NVIDIA:  (72x GB300-288GB_aarch64, TensorRT)</option>
+<option value='5.1-0073' >Nebius: Nebius B200 (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0074' >Nebius: Nebius GB200 (4x GB200-186GB_aarch64, TensorRT)</option>
+<option value='5.1-0075' >Nebius: Nebius H200 (8x H200-SXM-141GB, TensorRT)</option>
+<option value='5.1-0076' >Oracle: BM.GPU.B200.8</option>
+<option value='5.1-0077' >Oracle: BM.GPU.GB200.4</option>
+<option value='5.1-0078' >Quanta_Cloud_Technology: 1-node-2S-GNR_86C</option>
+<option value='5.1-0079' >Quanta_Cloud_Technology: QuantaGrid D74H-7U (8x H200-SXM-141GB, TensorRT)</option>
+<option value='5.1-0080' >Quanta_Cloud_Technology: D75E-4U_H200-NVL-141GBx4</option>
+<option value='5.1-0081' >Quanta_Cloud_Technology: D75T-7U_8xMI325X</option>
+<option value='5.1-0082' >RedHat: IBM Cloud gx3 instance 1xL40S-PCIE-48GB ,vLLM</option>
+<option value='5.1-0083' >RedHat: Dell PowerEdge XE8640 (1xH100-SXM-80GB, vLLM)</option>
+<option value='5.1-0084' >Supermicro: 1-node-2S-GNR_128C</option>
+<option value='5.1-0085' >Supermicro: AS-8126GS-TNMR (8x MI325X)</option>
+<option value='5.1-0086' >Supermicro: AS-4126GS-NBR-LCC (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0087' >Supermicro: SYS-422GA-NBRT-LCC (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0088' >Supermicro: SYS-422GS-NBRT-LCC (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0089' >Supermicro: SYS-A21GE-NBRT (8x B200-SXM-180GB, TensorRT)</option>
+<option value='5.1-0090' >Supermicro_MangoBoost: Supermicro AS-8126GS-TNMR (2x8x MI325X-256GB MangoBoost-LLMBoost)</option>
+<option value='5.1-0091' >Supermicro_MangoBoost: Supermicro AS-8126GS-TNMR (2x8x MI325X-256GB MangoBoost-LLMBoost) and Supermicro AS-8125GS-TNMR2 (1x8x MI300X-192GB MangoBoost-LLMBoost)</option>
+<option value='5.1-0092' >The_Stage: Nebius H100 (8x H100-SXM-80GB, TheStageAI)</option>
+<option value='5.1-0093' >University-of-Florida: NVIDIA DGX B200 (1x B200‑SXM‑180GB, TensorRT)</option>
+<option value='5.1-0094' >University-of-Florida: NVIDIA DGX B200 (8x B200‑SXM‑180GB, TensorRT)</option>
+<option value='5.1-0095' >Vultr: Supermicro AS -8126GS-TNMR (8x MI325X)</option>
+<option value='5.1-0096' >Vultr: Supermicro AS -8126GS-TNMR (8x MI325X)</option>
+<option value='5.1-0097' >CoreWeave:  (8x GB300-288GB_aarch64, TensorRT)</option>
+
+            </select>
+        </div>
+
+        <div class="form-field">
+            <label for="category">Category</label>
+            <select id="category" name="category" class="col">
+                <option value='0' >Datacenter</option>
+<option value='1' >Edge</option>
+
+            </select>
+        </div>
+
+        <div class="form-field">
+            <label for="models">Models</label>
+            <select id="models" name="models[]" class="col" multiple>
+                <option value='0' selected>All models</option>
+<option value='1' >llama2-70b-99</option>
+<option value='2' >llama2-70b-99.9</option>
+<option value='3' >mixtral-8x7b</option>
+<option value='4' >stable-diffusion-xl</option>
+<option value='5' >dlrm-v2-99</option>
+<option value='6' >dlrm-v2-99.9</option>
+<option value='7' >retinanet</option>
+<option value='8' >llama3.1-405b</option>
+<option value='9' >whisper</option>
+<option value='10' >llama3.1-8b</option>
+<option value='11' >rgat</option>
+<option value='12' >deepseek-r1</option>
+
+            </select>
+        </div>
+
+        <div class="form-field">
+            <button type="submit" name="okthen" value="1" id="compare_results">Compare SUTs</button>
+        </div>
+    </form>
+
+</html>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+  
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "..", "features": ["content.tabs.link", "content.code.copy", "navigation.expand", "navigation.sections", "navigation.indexes", "navigation.instant", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "toc.follow"], "search": "../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../assets/javascripts/bundle.92b07e13.min.js"></script>
+      
+    
+  <script type"text/javascript">
+  var resort = true, // re-apply the current sort
+        callback = function() {
+          // do something after the updateAll method has completed
+        };
+
+      // let the plugin know that we made a update, then the plugin will
+      // automatically sort the table based on the header settings
+      $("table").trigger("updateAll", [ resort, callback ]);
+  </script>
+
+
+  </body>
+</html>
