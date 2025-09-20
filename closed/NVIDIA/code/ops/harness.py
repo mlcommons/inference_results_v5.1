@@ -695,8 +695,9 @@ class ResultSummaryOp(Operation):
         else:
             md = result_data
 
-        with summary_file.open(mode="w") as f:
-            json.dump(md, f, indent=4, sort_keys=True)
+        if not os.environ.get('MLPERF_LOADGEN_LOGS_DIR'):
+            with summary_file.open(mode="w") as f:
+                json.dump(md, f, indent=4, sort_keys=True)
 
     def run(self, scratch_space, dependency_outputs):
         """Run the result summary operation.
