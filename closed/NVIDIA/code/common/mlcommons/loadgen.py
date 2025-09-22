@@ -40,7 +40,11 @@ from ...fields import harness as harness_fields
 from ...fields import loadgen as lg_fields
 from ...fields import models as model_fields
 
-submission_checker = import_from([paths.MLCOMMONS_INF_REPO / "tools" / "submission"] + sys.path, "submission_checker")
+if os.environ.get('MLC_MLPERF_INFERENCE_SOURCE', '') != '':
+    submission_checker = import_from([Path(os.environ['MLC_MLPERF_INFERENCE_SOURCE']) / "tools" / "submission"] + sys.path, "submission_checker")
+else:
+    submission_checker = import_from([paths.MLCOMMONS_INF_REPO / "tools" / "submission"] + sys.path, "submission_checker")
+    
 _latest_ver = max(versioning.parse(ver_key) for ver_key in submission_checker.MODEL_CONFIG.keys())
 _vstr = f"v{_latest_ver}"
 if _vstr != C.VERSION:
