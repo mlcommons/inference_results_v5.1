@@ -151,7 +151,7 @@ class GenerationConfig(JSONSliceable):
 @bind(llm_fields.moe_expert_parallelism)
 @bind(llm_fields.enable_ttft_latency_tracker)
 @bind(llm_fields.show_steady_state_progress)
-@bind(llm_fields.llm_gen_config_path, "gen_config_path")
+#@bind(llm_fields.llm_gen_config_path, "gen_config_path")
 @bind(gen_fields.log_dir)
 @bind(llm_fields.capture_server_logs_dir)
 @bind(Workload.FIELD, "workload")
