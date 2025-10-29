@@ -356,7 +356,7 @@ class TRTLLMBuilderOp(Operation):
                  *args,
                  lib_path: os.PathLike = paths.BUILD_DIR / "TRTLLM",
                  script_path: os.PathLike = Path("tensorrt_llm/commands/build.py"),
-                 build_flags: Optional[Dict[str, Any]] = None,
+                 build_flags: Optional[Dict[str, Any]] = {},
                  force: bool = False,
                  **kwargs):
         super().__init__(*args, **kwargs)
